@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>ELearning-Plattform</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <session-config>
+        <session-timeout>
+            300
+        </session-timeout>
+  </session-config>
+  
+  <!-- SECURITY -->
+  <login-config>
+    <auth-method>FORM</auth-method>
+        <realm-name>jdbc-realm</realm-name>
+    <form-login-config>
+        <form-login-page>/login.jsp</form-login-page>
+        <form-error-page>/login.jsp</form-error-page>
+    </form-login-config>
+  </login-config> 
+    
+  <security-role>
+      <description/>
+      <role-name>admin</role-name>      
+  </security-role>
+  <security-role>
+      <description/>
+      <role-name>teachers</role-name>      
+  </security-role>
+  <security-role>
+      <description/>
+      <role-name>students</role-name>      
+  </security-role>
+  
+  <security-constraint>
+   <display-name>Portal Access</display-name>
+      <web-resource-collection>
+      <web-resource-name>Portal Directory</web-resource-name>
+      <url-pattern>/portal/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+   </web-resource-collection>
+   <auth-constraint>
+   	  <role-name>admin</role-name>
+   	  <role-name>teachers</role-name>
+   	  <role-name>students</role-name>
+   </auth-constraint>
+   <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+   </user-data-constraint>
+  </security-constraint>
+  
+    <security-constraint>
+   <display-name>Students Access</display-name>
+      <web-resource-collection>
+      <web-resource-name>Students Directory</web-resource-name>
+      <url-pattern>/portal/students/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+   </web-resource-collection>
+   <auth-constraint>
+   	  <role-name>admin</role-name>
+   	  <role-name>students</role-name>
+   </auth-constraint>
+   <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+   </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+   <display-name>Teacher Access</display-name>
+      <web-resource-collection>
+      <web-resource-name>Teacher Directory</web-resource-name>
+      <url-pattern>/portal/teachers/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+   </web-resource-collection>
+   <auth-constraint>
+      <role-name>admin</role-name>
+      <role-name>teachers</role-name>
+   </auth-constraint>
+   <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+   </user-data-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+   <display-name>Admin Access</display-name>
+      <web-resource-collection>
+      <web-resource-name>Admin Directory</web-resource-name>
+      <url-pattern>/portal/admin/*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+   </web-resource-collection>
+   <auth-constraint>
+   	  <role-name>admin</role-name>
+   </auth-constraint>
+   <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+   </user-data-constraint>
+  </security-constraint>
+  
+  <servlet>
+    <servlet-name>CourseOverview</servlet-name>
+    <servlet-class>servlets.CourseOverview</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Showallusers</servlet-name>
+  	<servlet-class>servlets.ShowAllUsers</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>CourseOverview</servlet-name>
+  	<url-pattern>/courseOverview.jsp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Showallusers</servlet-name>
+  	<url-pattern>/showallusers.jsp</url-pattern>
+  </servlet-mapping>
+</web-app>
